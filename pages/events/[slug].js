@@ -1,9 +1,10 @@
 import React from "react";
+import Layout from "@/components/Layout";
 
 export default function Event() {
   return (
-    <div>
-      <h1>My Event</h1>
-    </div>
+    <Layout>
+      <h1>My Eventiiii</h1>
+    </Layout>
   );
 }
