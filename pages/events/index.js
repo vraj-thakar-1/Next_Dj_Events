@@ -1,12 +1,30 @@
-import React from "react";
+import { API_URL } from "@/config/index";
+import Link from "next/link";
 import Layout from "@/components/Layout";
-
-const EventsPage = () => {
+import EventsItem from "@/components/EventsItem";
+export default function EventsPage({ events }) {
+  // console.log(events.events.length);
   return (
-    <Layout title="event page">
-      <h1>My Events</h1>
+    <Layout>
+      <Link href="./">
+        <button className="btn-secondary"> {"<Back "} </button>
+      </Link>
+      <h1 className="container">Events</h1>
+      {events.events.length === 0 && <h3>No Events to show</h3>}
+      {events.events.length !== 0 &&
+        events.events.map((evt) => (
+          <EventsItem key={evt.id} evt={evt}></EventsItem>
+        ))}
     </Layout>
   );
-};
+}
 
-export default EventsPage;
+export async function getStaticProps() {
+  const res = await fetch(`${API_URL}/api/events`);
+  const events = await res.json();
+
+  return {
+    props: { events },
+    revalidate: 1,
+  };
+}
